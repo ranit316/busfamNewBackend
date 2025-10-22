@@ -1,0 +1,302 @@
+@media(max-width:576px) {
+
+    #backto-top {
+        display: none !important;
+    }
+
+    h2 strong:before {
+        right: -19px;
+    }
+
+    /* topbar start */
+    #topbar_desktop {
+        display: none !important;
+    }
+
+    #topbar_mobile {
+        display: block !important;
+    }
+
+    .toggle_button {
+        right: 20px !important;
+        top: 13px !important;
+    }
+
+    /* .navbar-nav {
+        justify-content: end !important;
+    } */
+
+    .topbar {
+        height: unset !important;
+        padding: 10px 0 !important;
+    }
+
+    .topbar .nav-item .nav-link {
+        height: unset !important;
+    }
+
+    button#sidebarToggle i {
+        font-size: 23px !important;
+        color: #787373 !important;
+    }
+
+    .topbar .nav-item .nav-link {
+        padding: 0 0.60rem !important;
+    }
+
+    .topbar .nav-item .nav-link i {
+        font-size: 16px !important;
+    }
+
+    .topbar .nav-item .nav-link .badge-counter {
+        margin-top: -10px;
+        color: #fff;
+        border-radius: 50%;
+        background: #198754;
+        padding: 0;
+        height: 20px;
+        width: 20px;
+        line-height: 20px;
+        text-align: center;
+    }
+
+    .topbar .dropdown .dropdown-menu {
+        width: calc(100% - 3rem);
+        right: 0;
+        left: 0 !important;
+        margin: 0 auto;
+    }
+
+    .topbar .dropdown-list .dropdown-item:last-child {
+        border-bottom: none !important;
+        color: #198754;
+    }
+
+    .input-group>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+        padding-top: 0px;
+    }
+
+    #dropdown-profile .dropdown-item i {
+        margin-right: 3px !important;
+    }
+
+    /* topbar end */
+
+    /* start sidebar */
+    .sidebar.toggled {
+        width: 100% !important;
+        top: -2px !important;
+        position: fixed;
+        height: 100% !important;
+        z-index: 999999999;
+    }
+
+    #toggle_button_sidebar {
+        right: 1.5pc !important;
+        left: unset !important;
+        display: block !important;
+    }
+
+    .sidebar.toggled #toggle_button_sidebar #sidebarToggle::after {
+        content: none !important;
+    }
+
+    .sidebar.toggled #toggle_button_sidebar #sidebarToggle {
+        border: none !important;
+    }
+
+    .sidebar.toggled #toggle_button_sidebar #sidebarToggle i {
+        height: 30px;
+        width: 30px;
+        background: #734BDB;
+        border-radius: 50%;
+        color: #fff !important;
+        text-align: center;
+        line-height: 30px;
+        font-size: 19px !important;
+    }
+
+    .sidebar.toggled #toggle_button_sidebar {
+        top: 18px !important;
+    }
+
+    .sidebar .sidebar-brand .sidebar-brand-text {
+        font-size: 20px !important;
+    }
+
+    .sidebar-brand-icon img {
+        width: 50px !important;
+    }
+
+    .sidebar .nav-item.active .nav-link {
+        color: #fff !important;
+    }
+
+    .sidebar.toggled .nav-item .collapse {
+        display: none !important;
+    }
+
+    .sidebar .nav-item .nav-link[data-bs-toggle="collapse"]::after {
+        content: none !important;
+    }
+
+    .sidebar .nav-item {
+        margin: 8px 25px !important;
+        border-radius: 12px !important;
+        transition: 0.5s;
+    }
+
+    .sidebar.toggled .sidebar-brand {
+        padding: .5rem 25px !important;
+        margin-bottom: 10px;
+    }
+
+    .sidebar .nav-item .nav-link {
+        font-size: 16px;
+    }
+
+    .sidebar .nav-item .nav-link span {
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    .sidebar .nav-item:hover {
+        background-color: var(--purple);
+        transition: 0.5s;
+    }
+
+    .sidebar .nav-item:hover .nav-link {
+        color: #fff;
+
+        & i {
+            color: #fff !important;
+        }
+    }
+
+    .topbar .dropdown .dropdown-menu .input-group button.btn-primary:hover i {
+        color: var(--purple) !important;
+    }
+
+    .page-content {
+        padding: 0px 15px 20px 15px;
+    }
+
+    .page-header h1 {
+        font-size: 25px;
+    }
+
+    .inner p {
+        font-size: 16px;
+    }
+
+    .intro-box h3 {
+        font-size: 16px;
+    }
+
+    .small-box-footer i {
+        margin-left: 2px;
+    }
+
+    button#sidebarToggle {
+        margin-left: unset !important;
+    }
+
+    /* end sidebar */
+    #dropdown-profile {
+        width: 160px !important;
+        margin: unset !important;
+        left: 10px !important;
+        right: unset !important;
+    }
+
+    .header_dropdown {
+        right: 1pc !important;
+        width: 200px !important;
+        left: unset !important;
+        margin: unset !important;
+        transform: unset !important;
+        top: 4pc !important;
+    }
+
+    .media_list img {
+        width: 70% !important;
+    }
+
+    .media_list .link-primary,
+    .media_list .link-danger {
+        display: inline-block !important;
+    }
+
+    .upload_div form #sub {
+        margin-top: 10px;
+    }
+
+    .dtr-data a {
+        display: inline-block;
+    }
+
+    .datatable-main {
+        margin-top: 15px;
+    }
+
+    div.dataTables_wrapper div.dataTables_filter input {
+        width: 80% !important;
+    }
+
+    .desktop_sidebar_links {
+        display: none;
+    }
+
+    .mobile_sidebar_links {
+        display: block;
+    }
+
+    .additem {
+        width: 100% !important;
+    }
+
+    #logoutModal .modal-dialog {
+        margin: 1.5rem;
+    }
+
+    .list-editor-page .additem_body img {
+        width: 100%;
+    }
+
+    .publish-row {
+        left: 0px !important;
+        padding: 10px 20px;
+    }
+
+    .switch-field {
+        justify-content: center;
+    }
+
+    .publish-row .additem_body {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .publish-row-submit {
+        text-align: center;
+    }
+
+    .list-editor-page .additem {
+        padding: 10px;
+    }
+
+    .additem h3 {
+        padding: 0px 0 6px 0;
+        font-size: 16px;
+    }
+
+    .remove_button a {
+        height: 20px;
+        width: 20px;
+        line-height: 20px;
+        padding: 0;
+    }
+    .remove_button i{
+        font-size: 12px;
+    }
+}
