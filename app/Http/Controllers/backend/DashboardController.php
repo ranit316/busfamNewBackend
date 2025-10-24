@@ -18,7 +18,7 @@ class DashboardController extends Controller
 
     public function media()
     {
-        $media = Media::where('status', 'active')->orderBy('created_at', 'desc')->get();
+        $media = Media::where('status', 'active')->get();
         return view('admin.media', compact('media'));
     }
 
@@ -53,7 +53,7 @@ class DashboardController extends Controller
                     'status' => 'active'
                 ]);
 
-                $all_media = Media::where('status', 'active')->orderBy('created_at', 'desc')->get();
+                $all_media = Media::where('status', 'active')->get();
             }
 
             DB::commit();

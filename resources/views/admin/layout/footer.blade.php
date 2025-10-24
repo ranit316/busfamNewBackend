@@ -153,7 +153,8 @@
                 index + 1,
                 media.media_name,
                 media.url,
-                `<img src="${imageUrl}" alt="${media.media_name}" width="80" height="80">`,
+                `<img src="${imageUrl}" alt="${media.media_name}" class="img-thumbnail media-select" style="cursor:pointer;" width="80" height="80" data-id="${ media.id }"
+                            data-url="${imageUrl}">`,
                 `<a href="#" class="link-danger" title="Delete"><i class="fa-solid fa-trash-can"></i></a>`
             ]);
         });
