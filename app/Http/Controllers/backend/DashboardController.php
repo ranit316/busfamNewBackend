@@ -46,7 +46,7 @@ class DashboardController extends Controller
 
                 // Save record to media table
                 $media = Media::create([
-                    'media_name' => pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME),
+                    'media_name' => $fileName,
                     'url' => 'image/' . $fileName, // relative to public/
                     'type' => $file->getClientMimeType(),
                     'alt' => pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME),
