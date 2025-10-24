@@ -10,14 +10,12 @@ use Illuminate\Support\Facades\Route;
 //     return 'admin dashboard';
 // })->name('dashboard');
 // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-// Route::get('filemanager', [DashboardController::class, 'filemaneger']);
 
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
-    Route::get('/', [FileManagerController::class, 'index'])->name('file-manager.index');
-});
 
 
 Route::prefix('admin')->as('admin.')->group(function () {
+    Route::get('images', [DashboardController::class, 'media'])->name('media');
+    Route::post('upload/media', [DashboardController::class, 'uploadMedia'])->name('upload.media');
 
     Route::resources([
         'banners' => BannerController::class,

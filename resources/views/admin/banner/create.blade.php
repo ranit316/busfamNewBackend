@@ -32,15 +32,29 @@
 
                                 <div class="mb-2">
                                     <label>Banner Image</label><br>
-                                    <div class="input-group">
-                                        <input type="text" id="image_path" name="image" class="form-control"
-                                            placeholder="Choose image" readonly>
-                                        <button type="button" class="btn btn-outline-primary"
-                                            onclick="openFileManager()">Choose Image</button>
-                                    </div>
-                                    <div class="mt-2">
-                                        <img id="image_preview" src="" alt=""
-                                            style="max-width: 250px; display:none; border-radius:8px;">
+                                    <div class="featured-image-wrapper border rounded p-3 bg-light position-relative"
+                                        style="max-width: 320px;">
+                                        <div class="img_holder text-center mb-3">
+                                            <img id="image_preview" src="" alt="Preview"
+                                                class="img-fluid rounded shadow-sm"
+                                                style="max-height: 180px; object-fit: cover; display:none;">
+                                        </div>
+
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                id="chooseImageBtn">
+                                                <i class="fa-solid fa-image me-1"></i> Choose Image
+                                            </button>
+                                        </div>
+
+                                        <div class="remove_button position-absolute" style="top:10px; right:10px;">
+                                            <button type="button" class="btn btn-danger btn-sm" id="removeImageBtn"
+                                                style="display:none;">
+                                                <i class="fa-solid fa-xmark"></i>
+                                            </button>
+                                        </div>
+
+                                        <input type="hidden" id="image_path" name="image">
                                     </div>
 
                                 </div>
@@ -52,5 +66,3 @@
         </div>
     </div>
 @endsection
-
-

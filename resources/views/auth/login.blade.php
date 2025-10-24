@@ -51,7 +51,7 @@
                         <a href="#" class="forgot-btn float-end">Forgot password?</a>
                     </div>
                     <div class="mb-3 text-center"> <button type="submit"
-                            class="btn btn-block btn-primary">Login</button> </div>
+                            class="btn btn-block btn-primary" id="submitBtn">Login</button> </div>
 
                     {{-- <div class="mb-3 text-center">
                         Need an Account? <a href="register.php">Sign Up</a>

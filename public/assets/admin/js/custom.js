@@ -37,6 +37,7 @@ function submitForm(form) {
       if (response.success) {
         $('body').waitMe("hide");
         toastr.success(response.message);
+
         setTimeout(() => {
           window.location.href = response.url;
         }, 1500);
@@ -108,10 +109,4 @@ function updateForm(form) {
   })
 }
 
-function openFileManager() {
-  const route_prefix = "/laravel-filemanager";
-  const modal = new bootstrap.Modal(document.getElementById('lfmModal'));
-  document.getElementById('lfmFrame').src = route_prefix + '?type=image';
-  modal.show();
-}
 

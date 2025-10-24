@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/admin/css/toastr.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/admin/css/waitMe.min.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link href="{{ asset('vendor/file-manager/css/file-manager.css') }}" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="{{ asset('assets/admin/css/select2.min.css') }}" rel="stylesheet" />
     <script src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
