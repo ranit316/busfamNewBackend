@@ -49,7 +49,7 @@ class DashboardController extends Controller
                     'media_name' => $fileName,
                     'url' => 'image/' . $fileName, // relative to public/
                     'type' => $file->getClientMimeType(),
-                    'alt' => pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME),
+                    'alt' => $fileName,
                     'status' => 'active'
                 ]);
 
