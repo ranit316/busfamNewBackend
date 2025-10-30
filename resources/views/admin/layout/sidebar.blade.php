@@ -18,7 +18,7 @@
     <!-- links for desktop -->
     <div class="desktop_sidebar_links">
         <li class="nav-item active">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ route('dashboard') }}">
                 <i class="fa-solid fa-house"></i>
                 <span>Dashboard</span></a>
         </li>
@@ -33,6 +33,11 @@
             <a class="nav-link" href="{{ route('admin.banners.index') }}">
                 <i class="fa-regular fa-circle-play"></i>
                 <span>Banner</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.banners.index') }}">
+                <i class="fa-regular fa-circle-play"></i>
+                <span>Pages</span></a>
         </li>
 
 

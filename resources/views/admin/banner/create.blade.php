@@ -61,6 +61,29 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-md-6 col-lg-4">
+                        <div class="additem">
+                            <h3>Publish</h3>
+                            <div class="additem_body">
+                                <div class="mb-3">
+                                    <label>Status</label>
+                                    <select class="form-select" aria-label="Default select example" name="status" id="status">
+                                        <option value="active" selected>Active</option>
+                                        <option value="inactive">Disable</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3 ">
+                                    <label>Sorting</label>
+                                    <input type="number" name="sort" id="sort" class="form-control">
+                                </div>
+
+                                <input type="submit" class="btn btn-primary" value="Publish">
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
             </form>
         </div>

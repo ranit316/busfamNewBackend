@@ -10,7 +10,11 @@ class Banner extends Model
         'media_id',
         'text',
         'sort',
+        'status'
     ];
 
-    
+    public function getImage()
+    {
+        return $this->belongsTo(Media::class, 'media_id', 'id');
+    }
 }

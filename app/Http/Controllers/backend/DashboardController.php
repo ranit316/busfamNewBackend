@@ -42,13 +42,16 @@ class DashboardController extends Controller
             if ($request->hasFile('media_file')) {
                 $file = $request->file('media_file');
                 $fileName = time() . '_' . $file->getClientOriginalName();
-                $file->move(public_path('image'), $fileName);
+                $file->move(public_path('images'), $fileName);
+
+                $mimeType = $file->getClientMimeType();
+                $type = explode('/', $mimeType)[0];
 
                 // Save record to media table
                 $media = Media::create([
                     'media_name' => $fileName,
-                    'url' => 'image/' . $fileName, // relative to public/
-                    'type' => $file->getClientMimeType(),
+                    'url' => 'images/' . $fileName, // relative to public/
+                    'type' => $type,
                     'alt' => $fileName,
                     'status' => 'active'
                 ]);

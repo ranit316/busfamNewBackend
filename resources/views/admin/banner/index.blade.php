@@ -34,7 +34,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        @foreach ($banners as $banner)
+                            <tr>
+                                <td>{{ $loop->iteration }}.</td>
+                                <td>{{ $banner->text }}</td>
+                                <td>
+                                    @if ($banner->getImage)
+                                        <img src="{{ asset($banner->getImage->url) }}" alt="{{ $banner->getImage->alt }}"
+                                            width="120" class="img-thumbnail">
+                                    @else
+                                        <img src="{{ asset('images/no-image.jpg') }}" alt="No Image" width="120"
+                                            class="img-thumbnail">
+                                    @endif
+                                </td>
+                                <td>{{ $banner->sort }}</td>
+                                <td></td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
