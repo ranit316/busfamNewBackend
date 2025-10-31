@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('paralink')->nullable();
             $table->longText('seo')->nullable();
             $table->string('banner_image')->nullable();
+            $table->enum('status', ['active', 'inactive']);
             $table->timestamps();
         });
     }

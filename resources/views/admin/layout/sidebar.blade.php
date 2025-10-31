@@ -35,7 +35,7 @@
                 <span>Banner</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.banners.index') }}">
+            <a class="nav-link" href="{{ route('admin.pages.index') }}">
                 <i class="fa-regular fa-circle-play"></i>
                 <span>Pages</span></a>
         </li>

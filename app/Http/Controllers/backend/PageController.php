@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Page;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -12,7 +13,8 @@ class PageController extends Controller
      */
     public function index()
     {
-        //
+        $pages = Page::where('status', 'active')->get();
+        return view('admin.pages.index', compact('pages'));
     }
 
     /**
@@ -44,7 +46,8 @@ class PageController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $page = Page::with('content')->where('id', $id)->first();
+        return view('admin.pages.template.' . $page->blade_name, compact('page'));
     }
 
     /**

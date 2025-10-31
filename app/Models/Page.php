@@ -14,4 +14,9 @@ class Page extends Model
         'seo',
         'banner_image',
     ];
+
+    public function content()
+    {
+        return $this->hasMany(PageContent::class, 'page_id', 'id');
+    }
 }
