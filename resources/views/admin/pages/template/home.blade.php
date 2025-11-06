@@ -29,16 +29,16 @@
                     <div class="col-md-12 col-lg-8">
                         <div class="whitebox">
                             <label>Enter Page Name</label>
-                            <input type="text" class="form-control mb-4" name="page_name" id="page_name"
+                            <input type="text" class="form-control mb-2" name="page_name" id="page_name"
                                 value="{{ $page->page_name }}" readonly>
                             <span class="error-text" id="page_name_error" style="color: red;"></span>
 
                             <label>Slug (URL)</label>
-                            <input type="text" class="form-control" name="slug" id="slug"
+                            <input type="text" class="form-control mb-2" name="slug" id="slug"
                                 value="{{ $page->slug ?? '' }}" placeholder="auto-generated from page name">
                             <span class="error-text" id="slug_error" style="color: red;"></span>
 
-                            <div class="mt-2">
+                            <div class="mt-2 mb-2">
                                 <small><strong>Permalink:</strong>
                                     <span id="permalink">{{ url('/') }}/<span
                                             id="permalink-slug">{{ $page->slug ?? '' }}</span></span>
@@ -46,7 +46,7 @@
                             </div>
 
                             <label>Welcome to Busfam</label>
-                            <textarea name="welcome_content" id="welcome_content" class="form-control ckeditor" rows="6">
+                            <textarea name="welcome_content" id="welcome_content" class="form-control mb-2 ckeditor" rows="6">
                     
                             </textarea>
                         </div>

@@ -185,7 +185,7 @@
 </script>
 <script>
     CKEDITOR.replace('.ckeditor', {
-        height: 250,
+        height: 150,
         removeButtons: 'PasteFromWord'
     });
 </script>
