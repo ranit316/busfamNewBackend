@@ -27,9 +27,9 @@
                     @csrf
 
                     <div class="col-md-12 col-lg-8">
-                        <div class="whitebox mb-4 row">
+                        <div class="whitebox">
                             <label>Enter Page Name</label>
-                            <input type="text" class="form-control" name="page_name" id="page_name"
+                            <input type="text" class="form-control mb-4" name="page_name" id="page_name"
                                 value="{{ $page->page_name }}" readonly>
                             <span class="error-text" id="page_name_error" style="color: red;"></span>
 
@@ -44,6 +44,11 @@
                                             id="permalink-slug">{{ $page->slug ?? '' }}</span></span>
                                 </small>
                             </div>
+
+                            <label>Welcome to Busfam</label>
+                            <textarea name="welcome_content" id="welcome_content" class="form-control ckeditor" rows="6">
+                    
+                            </textarea>
                         </div>
                     </div>
 

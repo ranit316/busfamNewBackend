@@ -183,3 +183,9 @@
         });
     });
 </script>
+<script>
+    CKEDITOR.replace('.ckeditor', {
+        height: 250,
+        removeButtons: 'PasteFromWord'
+    });
+</script>
