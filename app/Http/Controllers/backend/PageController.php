@@ -4,7 +4,9 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use App\Models\PageContent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
@@ -46,7 +48,7 @@ class PageController extends Controller
      */
     public function edit(string $id)
     {
-        $page = Page::with('content')->where('id', $id)->first();
+        $page = Page::where('id', $id)->first();
         return view('admin.pages.template.' . $page->blade_name, compact('page'));
     }
 
@@ -55,7 +57,44 @@ class PageController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            // 1️⃣ Update main page fields
+            $page = Page::findOrFail($id);
+            $page->update([
+                'slug' => $request->slug,
+            ]);
+
+            // 2️⃣ Handle dynamic content fields (key-value)
+            $keyValues = $request->except(['_token', '_method', 'slug']); // Exclude non-content fields
+
+            foreach ($keyValues as $key => $value) {
+                if ($key && $value !== null) {
+                    PageContent::updateOrCreate(
+                        [
+                            'page_id' => $page->id,
+                            'key' => $key
+                        ],
+                        [
+                            'value' => $value
+                        ]
+                    );
+                }
+            }
+
+            DB::commit();
+            return response()->json([
+                'success' => true,
+                'message' => 'Page updated successfully.',
+                'url' => route('admin.pages.edit', $page->id),
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong: ' . $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**

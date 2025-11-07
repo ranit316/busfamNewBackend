@@ -19,4 +19,10 @@ class Page extends Model
     {
         return $this->hasMany(PageContent::class, 'page_id', 'id');
     }
+
+
+    public function getContentKeyValueAttribute()
+    {
+        return $this->content->pluck('value', 'key')->toArray();
+    }
 }

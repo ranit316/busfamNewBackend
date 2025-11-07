@@ -21,11 +21,11 @@
                 </div>
             </div>
 
-            <div class="row g-2">
-                <form id="companyForm" action="#" method="post" enctype="multipart/form-data"
-                    onsubmit="event.preventDefault(); submitForm(this);">
-                    @csrf
-
+            <form id="companyForm" action="{{ route('admin.pages.update', $page->id) }}" method="post"
+                enctype="multipart/form-data" onsubmit="event.preventDefault(); updateForm(this);">
+                @csrf
+                @method('PUT')
+                <div class="row g-2">
                     <div class="col-md-12 col-lg-8">
                         <div class="whitebox">
                             <label>Enter Page Name</label>
@@ -47,13 +47,27 @@
 
                             <label>Welcome to Busfam</label>
                             <textarea name="welcome_content" id="welcome_content" class="form-control mb-2 ckeditor" rows="6">
-                    
+                                {!! $page->content_key_value['welcome_content'] ?? '' !!}
                             </textarea>
+
+                            <label>Text 2</label>
+                            <textarea class="form-control mb-2 ckeditor" name="text_2" id="text_2" rows="6">{!! $page->content_key_value['text_2'] ?? '' !!}</textarea>
                         </div>
                     </div>
 
-                </form>
-            </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="additem">
+                            <h3>Publish</h3>
+                            <div class="additem_body">
+
+                                <input type="submit" class="btn btn-primary" value="Publish">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
 
 
         </div>
