@@ -66,7 +66,7 @@ class PageController extends Controller
             ]);
 
             // 2️⃣ Handle dynamic content fields (key-value)
-            $keyValues = $request->except(['_token', '_method', 'slug']); // Exclude non-content fields
+            $keyValues = $request->except(['_token', '_method', 'slug']);
 
             foreach ($keyValues as $key => $value) {
                 if ($key && $value !== null) {
