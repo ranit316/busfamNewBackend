@@ -57,6 +57,7 @@ class PageController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // return $request->all();
         DB::beginTransaction();
         try {
             // 1️⃣ Update main page fields
