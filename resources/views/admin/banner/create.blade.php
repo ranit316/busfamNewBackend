@@ -35,20 +35,20 @@
                                     <div class="featured-image-wrapper border rounded p-3 bg-light position-relative"
                                         style="max-width: 320px;">
                                         <div class="img_holder text-center mb-3">
-                                            <img id="image_preview" src="" alt="Preview"
-                                                class="img-fluid rounded shadow-sm"
+                                            <img src="" alt="Preview"
+                                                class="img-fluid rounded shadow-sm image_preview"
                                                 style="max-height: 180px; object-fit: cover; display:none;">
                                         </div>
 
                                         <div class="text-center">
-                                            <button type="button" class="btn btn-outline-primary btn-sm"
-                                                id="chooseImageBtn">
+                                            <button type="button" class="btn btn-outline-primary btn-sm chooseImageBtn"
+                                                onclick="openMediaModal(this)">
                                                 <i class="fa-solid fa-image me-1"></i> Choose Image
                                             </button>
                                         </div>
 
                                         <div class="remove_button position-absolute" style="top:10px; right:10px;">
-                                            <button type="button" class="btn btn-danger btn-sm" id="removeImageBtn"
+                                            <button type="button" class="btn btn-danger btn-sm removeImageBtn"
                                                 style="display:none;">
                                                 <i class="fa-solid fa-xmark"></i>
                                             </button>

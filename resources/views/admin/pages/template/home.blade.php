@@ -117,9 +117,93 @@
                                 <div id="flush-collapseFour" class="accordion-collapse collapse"
                                     data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body">
+                                        @php
+                                            // Decode the award_press content if it exists
+                                            $awardPress = isset($page->content_key_value['award_press'])
+                                                ? json_decode($page->content_key_value['award_press'], true)
+                                                : [];
+                                        @endphp
                                         <label>Awards & Press Release</label>
-                                        <textarea class="form-control mb-2 ckeditor" name="why_choose_digital_marketing" id="Why_Choose_Digital_Marketing"
-                                            rows="6">{!! $page->content_key_value['why_choose_digital_marketing'] ?? '' !!}</textarea>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sl No</th>
+                                                    <th>Image</th>
+                                                    <th>Text</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody id="tableBody">
+                                                @forelse ($awardPress as $index => $item)
+                                                    <tr>
+                                                        <td>{{ $loop->iteration }}.</td>
+                                                        <td>
+                                                            <div class="image-wrapper text-center">
+                                                                <img src="{{ getMediaUrl($item['image']) }}"
+                                                                    class="img-fluid rounded shadow-sm mb-2 image_preview"
+                                                                    style="max-height: 100px; {{ $item['image'] ? '' : 'display:none;' }}">
+
+                                                                <button type="button"
+                                                                    class="btn btn-outline-primary btn-sm chooseImageBtn"
+                                                                    onclick="openMediaModal(this)"
+                                                                    style="{{ $item['image'] ? 'display:none;' : '' }}">
+                                                                    <i class="fa-solid fa-image me-1"></i> Choose Image
+                                                                </button>
+
+                                                                <button type="button"
+                                                                    class="btn btn-danger btn-sm removeImageBtn"
+                                                                    style="{{ $item['image'] ? '' : 'display:none;' }}">
+                                                                    <i class="fa-solid fa-xmark"></i>
+                                                                </button>
+
+                                                                <input type="hidden" name="images[]" class="image_path"
+                                                                    value="{{ $item['image'] }}">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="texts[]" class="form-control"
+                                                                value="{{ $item['text'] }}" placeholder="Enter text">
+                                                        </td>
+                                                        <td>
+                                                            @if ($loop->last)
+                                                                <button type="button"
+                                                                    class="btn btn-success btn-sm add-row">+</button>
+                                                            @endif
+                                                            <button type="button"
+                                                                class="btn btn-danger btn-sm remove-row">-</button>
+                                                        </td>
+                                                    </tr>
+                                                @empty
+                                                    {{-- Default empty row --}}
+                                                    <tr>
+                                                        <td>1.</td>
+                                                        <td>
+                                                            <div class="image-wrapper text-center">
+                                                                <img src=""
+                                                                    class="img-fluid rounded shadow-sm mb-2 image_preview"
+                                                                    style="max-height: 100px; display:none;">
+                                                                <button type="button"
+                                                                    class="btn btn-outline-primary btn-sm chooseImageBtn"
+                                                                    onclick="openMediaModal(this)">
+                                                                    <i class="fa-solid fa-image me-1"></i> Choose Image
+                                                                </button>
+                                                                <button type="button"
+                                                                    class="btn btn-danger btn-sm removeImageBtn"
+                                                                    style="display:none;">
+                                                                    <i class="fa-solid fa-xmark"></i>
+                                                                </button>
+                                                                <input type="hidden" name="images[]" class="image_path">
+                                                            </div>
+                                                        </td>
+                                                        <td><input type="text" name="texts[]" class="form-control"
+                                                                placeholder="Enter text"></td>
+                                                        <td><button type="button"
+                                                                class="btn btn-success btn-sm add-row">+</button></td>
+                                                    </tr>
+                                                @endforelse
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -183,6 +267,80 @@
                 let slug = slugify($(this).val());
                 $(this).val(slug);
                 $('#permalink-slug').text(slug);
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            let rowCount = 1;
+
+            // ➕ Add new row
+            $(document).on("click", ".add-row", function() {
+                let lastRow = $("#tableBody tr:last");
+                let newRow = lastRow.clone();
+                rowCount++;
+
+                // Reset inputs and states
+                newRow.find("td:first").text(rowCount + ".");
+                newRow.find("input[type='text']").val("");
+                newRow.find(".image_preview").attr("src", "").hide();
+                newRow.find(".image_path").val("");
+                newRow.find(".removeImageBtn").hide();
+                newRow.find(".chooseImageBtn").show();
+
+                // Ensure button calls openMediaModal correctly
+                newRow.find(".chooseImageBtn").attr("onclick", "openMediaModal(this)");
+
+                // Replace last column buttons
+                newRow.find("td:last").html(`
+                <button type="button" class="btn btn-success btn-sm add-row">+</button>
+                <button type="button" class="btn btn-danger btn-sm remove-row">-</button>
+            `);
+                // console.log(newRow);
+                // Append new row
+                $("#tableBody").append(newRow);
+
+                // Update numbering and buttons
+                updateRowButtons();
+            });
+
+            // ➖ Remove row
+            $(document).on("click", ".remove-row", function() {
+                if ($("#tableBody tr").length > 1) {
+                    $(this).closest("tr").remove();
+                    updateRowButtons();
+                }
+            });
+
+            // 🔁 Update row numbering and button states
+            function updateRowButtons() {
+                $("#tableBody tr").each(function(index) {
+                    $(this).find("td:first").text((index + 1) + ".");
+                });
+
+                // Make sure only the last row has the "+" button
+                $("#tableBody tr").each(function(index) {
+                    if (index === $("#tableBody tr").length - 1) {
+                        $(this).find("td:last").html(`
+                        <button type="button" class="btn btn-success btn-sm add-row">+</button>
+                        <button type="button" class="btn btn-danger btn-sm remove-row">-</button>
+                    `);
+                    } else {
+                        $(this).find("td:last").html(`
+                        <button type="button" class="btn btn-danger btn-sm remove-row">-</button>
+                    `);
+                    }
+                });
+            }
+
+            // ❌ Remove selected image per row
+            $(document).on('click', '.removeImageBtn', function() {
+                let row = $(this).closest('tr');
+                row.find('.image_preview').attr('src', '').hide();
+                row.find('.image_path').val('');
+                row.find('.removeImageBtn').hide();
+                row.find('.chooseImageBtn').show();
             });
         });
     </script>

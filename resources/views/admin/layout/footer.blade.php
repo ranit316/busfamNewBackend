@@ -68,30 +68,36 @@
     });
 </script>
 
-<script>
-    $(document).ready(function() {
-        $('#chooseImageBtn').on('click', function() {
-            $.ajax({
-                url: "{{ route('admin.media') }}", // Your route
-                type: "GET",
-                success: function(response) {
-                    $('.modal-body').html(response);
-                    $('#imageModal').modal('show');
-                    $('.modal-body').find('#mediaTable').DataTable({
-                        destroy: true, // ensures reinitialization
-                        responsive: true,
-                        pageLength: 10,
-                        order: [
-                            [0, 'desc']
-                        ]
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Failed to fetch media:', error);
-                }
-            });
+{{-- <script>
+    function openMediaModal(triggerButton) {
+        $.ajax({
+            url: "{{ route('admin.media') }}", // Laravel route that returns media HTML
+            type: "GET",
+            success: function(response) {
+                // Inject media table into modal
+                $('.modal-body').html(response);
+
+                // Show modal
+                $('#imageModal').modal('show');
+
+                // Initialize DataTable safely
+                $('.modal-body').find('#mediaTable').DataTable({
+                    destroy: true,
+                    responsive: true,
+                    pageLength: 10,
+                    order: [
+                        [0, 'desc']
+                    ]
+                });
+
+                // Store which button triggered this
+                window.activeImageButton = triggerButton;
+            },
+            error: function(xhr, status, error) {
+                console.error('Failed to fetch media:', error);
+            }
         });
-    });
+    }
 </script>
 
 <script>
@@ -168,21 +174,155 @@
         let imageUrl = $(this).data('url');
 
         // Set preview and hidden input
-        $('#image_preview').attr('src', imageUrl).show();
+        $('.image_preview').attr('src', imageUrl).show();
         $('#image_path').val(imageId);
-        $('#removeImageBtn').show();
+        $('.removeImageBtn').show();
+        $('.chooseImageBtn').hide();
 
         // Close modal
         $('#imageModal').modal('hide');
 
 
-        $('#removeImageBtn').on('click', function() {
-            $('#image_preview').attr('src', '').hide();
+        $('.removeImageBtn').on('click', function() {
+            $('.image_preview').attr('src', '').hide();
             $('#image_path').val('');
             $(this).hide();
+            $('.chooseImageBtn').show();
         });
     });
+</script> --}}
+
+<script>
+    let activeImageContainer = null; // stores which block or row triggered the modal
+
+    // 🖼️ Open media modal (called by any "Choose Image" button)
+    function openMediaModal(triggerButton) {
+        activeImageContainer = $(triggerButton).closest('.featured-image-wrapper, tr'); // detect container
+
+        $.ajax({
+            url: "{{ route('admin.media') }}", // Laravel route
+            type: "GET",
+            success: function(response) {
+                // Inject content
+                $('.modal-body').html(response);
+                $('#imageModal').modal('show');
+
+                // Initialize DataTable
+                $('.modal-body').find('#mediaTable').DataTable({
+                    destroy: true,
+                    responsive: true,
+                    pageLength: 10,
+                    order: [
+                        [0, 'desc']
+                    ]
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Failed to fetch media:', error);
+                toastr.error('Failed to load media library.');
+            }
+        });
+    }
+
+    // 🧩 Upload new media (used inside modal)
+    function uploadMedia(form) {
+        let formData = new FormData(form);
+        let url = $(form).attr("action");
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function() {
+                $("#submitBtn").prop("disabled", true);
+                $('body').waitMe({
+                    effect: 'roundBounce',
+                    bg: 'rgba(255, 255, 255, 0.7)',
+                    color: '#000'
+                });
+            },
+            success: function(response) {
+                $('body').waitMe("hide");
+                $("#submitBtn").prop("disabled", false);
+
+                if (response.success) {
+                    toastr.success(response.message);
+                    $(form)[0].reset();
+                    updateMediaTable(response.media);
+                }
+            },
+            error: function(xhr) {
+                $('body').waitMe("hide");
+                $("#submitBtn").prop("disabled", false);
+
+                if (xhr.status === 422) {
+                    let errors = xhr.responseJSON.errors;
+                    Object.keys(errors).forEach((key) => {
+                        $("#" + key + "_error").text(errors[key][0]);
+                    });
+                    toastr.error("Please correct the errors and try again.");
+                } else {
+                    toastr.error("Something went wrong! Try again.");
+                }
+            }
+        });
+    }
+
+    // 🧱 Refresh media table after upload
+    function updateMediaTable(mediaList) {
+        let table = $("#mediaTable").DataTable();
+        table.clear();
+
+        mediaList.forEach(function(media, index) {
+            let imageUrl = "{{ asset('') }}" + media.url;
+            table.row.add([
+                index + 1,
+                media.media_name,
+                media.url,
+                `<img src="${imageUrl}" alt="${media.media_name}" 
+                      class="img-thumbnail media-select" 
+                      style="cursor:pointer;" width="80" height="80" 
+                      data-id="${media.id}" data-url="${imageUrl}">`,
+                `<a href="#" class="link-danger" title="Delete">
+                      <i class="fa-solid fa-trash-can"></i></a>`
+            ]);
+        });
+
+        table.draw(false);
+    }
+
+    // 🖱️ When image is selected
+    $(document).on('click', '.media-select', function() {
+        if (!activeImageContainer) return;
+
+        let imageId = $(this).data('id');
+        let imageUrl = $(this).data('url');
+
+        // Update only the active container (not all)
+        activeImageContainer.find('.image_preview').attr('src', imageUrl).show();
+        activeImageContainer.find('.image_path, #image_path').val(imageId);
+        activeImageContainer.find('.removeImageBtn').show();
+        activeImageContainer.find('.chooseImageBtn').hide();
+
+        // Close modal
+        $('#imageModal').modal('hide');
+        activeImageContainer = null;
+    });
+
+    // ❌ Remove selected image
+    $(document).on('click', '.removeImageBtn', function() {
+        let container = $(this).closest('.featured-image-wrapper, tr');
+        container.find('.image_preview').attr('src', '').hide();
+        container.find('.image_path, #image_path').val('');
+        container.find('.removeImageBtn').hide();
+        container.find('.chooseImageBtn').show();
+    });
 </script>
+
+
+
 <script>
     CKEDITOR.replace('.ckeditor', {
         height: 150,

@@ -142,9 +142,9 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ route('admin.setting.webSettig') }}">
                 <i class="fa-solid fa-chart-pie"></i>
-                <span>Assemble</span></a>
+                <span>Setting</span></a>
         </li>
 
         <li class="nav-item">

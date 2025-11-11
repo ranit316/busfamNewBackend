@@ -67,7 +67,7 @@ class PageController extends Controller
             ]);
 
             // 2️⃣ Handle dynamic content fields (key-value)
-            $keyValues = $request->except(['_token', '_method', 'slug']);
+            $keyValues = $request->except(['_token', '_method', 'slug', 'images', 'texts']);
 
             foreach ($keyValues as $key => $value) {
                 if ($key && $value !== null) {
@@ -81,6 +81,30 @@ class PageController extends Controller
                         ]
                     );
                 }
+            }
+
+            if ($request->has('images')) {
+                $images = $request->images;
+                $texts = $request->texts ?? [];
+
+                $awardPressData = [];
+
+                foreach ($images as $index => $imgId) {
+                    $awardPressData[] = [
+                        'image' => $imgId,
+                        'text'  => $texts[$index] ?? '', // fallback text
+                    ];
+                }
+
+                PageContent::updateOrCreate(
+                    [
+                        'page_id' => $page->id,
+                        'key' => 'award_press',
+                    ],
+                    [
+                        'value' => json_encode($awardPressData),
+                    ]
+                );
             }
 
             DB::commit();
