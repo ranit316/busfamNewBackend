@@ -26,5 +26,6 @@ Route::prefix('admin')->as('admin.')->group(function () {
 
     // Setting Route
    Route::get('setting/general-setting', [SettingController::class, 'webSettig'])->name('setting.webSettig');
+   Route::post('setting/general-setting-update', [SettingController::class, 'webpageUpdate'])->name('setting.webSettig.updae');
 
 });
